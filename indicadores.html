@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indicadores de Gestión de Red</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0"></script>
+  <style>
+    /* Animaciones de entrada */
+    .fade-in {
+      animation: fadeIn 1.2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-gray-900 text-white font-sans">
+
+  <div class="container mx-auto p-8">
+    <!-- Título -->
+    <h1 class="text-5xl font-extrabold text-center mb-10 text-blue-400 fade-in">Dashboard de Indicadores de Gestión de Red</h1>
+
+    <!-- Tarjetas del Dashboard -->
+    <div class="grid grid-cols-4 gap-6 mb-10 fade-in">
+      <!-- Capacidad de la Red -->
+      <div class="bg-white text-center p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold text-gray-700">Capacidad de la Red</h2>
+        <p class="text-3xl font-extrabold text-blue-500">150 Mbps</p>
+        <p class="text-sm text-gray-500">Ancho de Banda Total</p>
+      </div>
+
+      <!-- Latencia Promedio -->
+      <div class="bg-white text-center p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold text-gray-700">Latencia Promedio</h2>
+        <p class="text-3xl font-extrabold text-green-500">16.4 ms</p>
+        <p class="text-sm text-gray-500">Tiempo Promedio de Respuesta</p>
+      </div>
+
+      <!-- Pérdida de Paquetes -->
+      <div class="bg-white text-center p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold text-gray-700">Pérdida de Paquetes</h2>
+        <p class="text-3xl font-extrabold text-red-500">5%</p>
+        <p class="text-sm text-gray-500">Total de Paquetes Perdidos</p>
+      </div>
+
+      <!-- Total de Servicios -->
+      <div class="bg-white text-center p-6 rounded-lg shadow-lg">
+        <h2 class="text-xl font-bold text-gray-700">Calidad de Servicios</h2>
+        <p class="text-3xl font-extrabold text-cyan-500">10ms</p>
+        <p class="text-sm text-gray-500">Voz</p>
+        <p class="text-3xl font-extrabold text-cyan-500">20ms</p>
+        <p class="text-sm text-gray-500">Video</p>
+        <p class="text-3xl font-extrabold text-cyan-500">5ms</p>
+        <p class="text-sm text-gray-500">Datos</p>
+      </div>
+    </div>
+
+    <!-- Navegación -->
+    <nav class="flex justify-center mb-10 fade-in">
+      <a href="index.html" class="px-6 py-3 bg-blue-600 text-white rounded-full font-bold shadow-lg hover:bg-blue-500 transition">Panel de Monitoreo</a>
+      <a href="seguridad.html" class="px-6 py-3 bg-green-600 text-white rounded-full font-bold shadow-lg hover:bg-green-500 transition ml-4">Panel de Seguridad</a>
+      <a href="indicadores.html" class="px-6 py-3 bg-purple-600 text-white rounded-full font-bold shadow-lg hover:bg-purple-500 transition ml-4">Indicadores de Red</a>
+    </nav>
+
+    <!-- Gráficos -->
+    <div class="grid grid-cols-3 gap-8 fade-in">
+      <!-- Capacidad de la Red -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-blue-300">Capacidad de la Red</h2>
+        <canvas id="chartCapacity"></canvas>
+      </div>
+
+      <!-- Latencia -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-yellow-300">Latencia Promedio</h2>
+        <canvas id="chartLatency"></canvas>
+      </div>
+
+      <!-- Pérdida de Paquetes -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-red-300">Pérdida de Paquetes</h2>
+        <canvas id="chartPacketLoss"></canvas>
+      </div>
+
+      <!-- Disponibilidad -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-blue-300">Disponibilidad</h2>
+        <canvas id="chartAvailability"></canvas>
+      </div>
+
+      <!-- Utilización de Equipos -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-green-300">Utilización de Equipos</h2>
+        <canvas id="chartEquipment"></canvas>
+      </div>
+
+      <!-- Seguridad de la Red -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-red-300">Seguridad de la Red</h2>
+        <canvas id="chartSecurity"></canvas>
+      </div>
+
+      <!-- Redundancia -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-cyan-300">Redundancia y Resilencia</h2>
+        <canvas id="chartRedundancy"></canvas>
+      </div>
+
+      <!-- Escalabilidad -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-yellow-300">Escalabilidad</h2>
+        <canvas id="chartScalability"></canvas>
+      </div>
+
+      <!-- Tráfico y Flujo de Datos -->
+      <div class="bg-gradient-to-tr from-blue-800 to-gray-800 p-6 rounded-lg shadow-lg">
+        <h2 class="text-lg font-bold mb-4 text-center text-blue-300">Tráfico y Flujo de Datos</h2>
+        <canvas id="chartTraffic"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script para los gráficos -->
+  <script>
+    // Configuración de datos para gráficos
+    const dataCapacity = {
+      labels: ['Usado', 'Libre'],
+      datasets: [{
+        data: [80, 20],
+        backgroundColor: ['#4ade80', '#6366f1'],
+      }]
+    };
+
+    const dataLatency = {
+      labels: ['TR - MS'],
+      datasets: [{
+        data: [15],
+        backgroundColor: ['#fbbf24'],
+      }]
+    };
+
+    const dataPacketLoss = {
+      labels: ['Pérdida', 'Correctos'],
+      datasets: [{
+        data: [5, 95],
+        backgroundColor: ['#ef4444', '#4ade80'],
+      }]
+    };
+
+    const dataAvailability = {
+      labels: ['Uptime'],
+      datasets: [{
+        data: [99.99],
+        backgroundColor: ['#6366f1'],
+      }]
+    };
+
+    const dataEquipment = {
+      labels: ['Uso de CPU', 'Libre'],
+      datasets: [{
+        data: [85, 15],
+        backgroundColor: ['#4ade80', '#3b82f6'],
+      }]
+    };
+
+    const dataSecurity = {
+      labels: ['Ataques/Mes'],
+      datasets: [{
+        data: [1],
+        backgroundColor: ['#f87171'],
+      }]
+    };
+
+    const dataRedundancy = {
+      labels: ['Disponible - Segundos'],
+      datasets: [{
+        data: [12],
+        backgroundColor: ['#22d3ee', '#ef4444'],
+      }]
+    };
+
+    const dataScalability = {
+      labels: ['Capacidad usada', 'Capacidad libre'],
+      datasets: [{
+        data: [20, 80],
+        backgroundColor: ['#facc15', '#4ade80'],
+      }]
+    };
+
+    const dataTraffic = {
+      labels: ['Flujo de Datos'],
+      datasets: [{
+        data: [0.5],
+        backgroundColor: ['#6366f1'],
+      }]
+    };
+
+    // Renderización de los gráficos
+    new Chart(document.getElementById('chartCapacity'), { type: 'doughnut', data: dataCapacity });
+    new Chart(document.getElementById('chartLatency'), { type: 'bar', data: dataLatency });
+    new Chart(document.getElementById('chartPacketLoss'), { type: 'doughnut', data: dataPacketLoss });
+    new Chart(document.getElementById('chartAvailability'), { type: 'pie', data: dataAvailability });
+    new Chart(document.getElementById('chartEquipment'), { type: 'doughnut', data: dataEquipment });
+    new Chart(document.getElementById('chartSecurity'), { type: 'bar', data: dataSecurity });
+    new Chart(document.getElementById('chartRedundancy'), { type: 'bar', data: dataRedundancy });
+    new Chart(document.getElementById('chartScalability'), { type: 'doughnut', data: dataScalability });
+    new Chart(document.getElementById('chartTraffic'), { type: 'bar', data: dataTraffic });
+  </script>
+</body>
+</html>
